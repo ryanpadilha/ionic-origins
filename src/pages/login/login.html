@@ -1,0 +1,55 @@
+<ion-header no-border>
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce padding>
+
+    <div padding class="login-box">
+      <ion-row class="app-icon-container">
+        <ion-col text-center>
+          <ion-icon name="ionic" class="app-icon-zoom"></ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <form [formGroup]="credentialsForm">
+    
+        <ion-item>
+          <ion-label floating>E-mail</ion-label>
+          <ion-input type="email" [formControl]="credentialsForm.controls['username']"></ion-input>
+        </ion-item>
+
+        <div *ngIf="!credentialsForm.controls.username.valid &&
+                    credentialsForm.controls.username.dirty" class="validator-error">
+                  Please enter a valid email.
+        </div>
+
+        <ion-item>
+          <ion-label floating>Senha</ion-label>
+          <ion-input type="password" [formControl]="credentialsForm.controls['password']"></ion-input>
+        </ion-item>  
+
+        <div *ngIf="credentialsForm.controls.password.hasError('pattern') &&
+          (credentialsForm.controls.password.dirty)" class="validator-error">
+          Passwords should be at least 8 characters long and contain one number, one character and one special character.
+        </div>
+
+        <ion-row>
+          <ion-col text-center>
+              <button ion-button color="primary" block 
+                [disabled]="credentialsForm.invalid" (click)="onSignIn()" >Entrar</button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col text-center>
+              <button ion-button clear (click)="onForgotPassword()">
+                Esqueceu a senha?
+              </button>
+          </ion-col>
+        </ion-row>
+      </form>
+      <p class="version">Versão 0.0.1</p>
+  </div>
+</ion-content>
