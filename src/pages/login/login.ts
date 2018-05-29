@@ -1,6 +1,9 @@
+import { MessageServiceProvider } from './../../providers/message-service/message-service';
+import { HomePage } from './../home/home';
+import { AuthProvider } from './../../providers/auth/auth';
 import { Credential } from './../models/credential.model';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { regexValidators } from '../validators/validator';
@@ -16,7 +19,10 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
-              private formBuilder: FormBuilder) {
+              public formBuilder: FormBuilder,
+              public authProvider: AuthProvider,
+              public menuCtrl: MenuController,
+              public messageProvider: MessageServiceProvider) {
 
     this.credentialsForm = this.formBuilder.group({
       username: ['', Validators.compose([Validators.pattern(regexValidators.email), Validators.required])],
@@ -25,7 +31,7 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    this.menuCtrl.enable(false, 'appMenu');
   }
 
   onSignIn() {
@@ -34,8 +40,23 @@ export class LoginPage {
       this.credentialsForm.value.password
     )
 
-    console.log(credential);
+    let loading = this.messageProvider.showLoading();
 
+    console.log('login.onSignIn: ' + credential);
+    this.authProvider.login(credential).then((res) => {
+      loading.dismiss();
+      console.log('login.onSignIn res: '+ res);
+
+      if (res.token) {
+        this.menuCtrl.enable(true, 'appMenu');
+        this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'foward' });
+      } else {
+        this.messageProvider.showToast(res.message);
+      }
+    }).catch((error) => {
+      loading.dismiss();
+      this.messageProvider.showAlert('Alerta', 'Falha de comunicação com o servidor. Tente mais tarde novamente.');
+    });
   }
 
   onForgotPassword() {

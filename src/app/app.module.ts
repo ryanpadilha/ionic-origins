@@ -13,6 +13,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
 import { HttpServiceProvider } from '../providers/http-service/http-service';
 import { StorageProvider } from '../providers/storage/storage';
+import { MessageServiceProvider } from '../providers/message-service/message-service';
+import { HttpClientModule } from '@angular/common/http';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @NgModule({
   declarations: [
@@ -23,11 +26,9 @@ import { StorageProvider } from '../providers/storage/storage';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot({
-      name: '__originsdb',
-         driverOrder: ['indexeddb',] // 'sqlite', 'websql'
-    }),
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,7 +44,9 @@ import { StorageProvider } from '../providers/storage/storage';
     AuthProvider,
     AuthProvider,
     HttpServiceProvider,
-    StorageProvider
+    StorageProvider,
+    MessageServiceProvider,
+    NativeStorage,
   ]
 })
 export class AppModule {}

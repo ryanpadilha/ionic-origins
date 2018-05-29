@@ -23,4 +23,13 @@ page-login {
     bottom:0;
     width: calc(100% - 62px);
     max-width: 600px;
-  }
+}
+
+.logo{
+    // opacity: 0;
+    // transform: rotate3d(1, 1, 0, 50deg);
+    animation: 1s 0.2s ease fadeInAndSpin;
+    animation-fill-mode: forwards;
+    width: 90%;
+    height: 90%;
+}
