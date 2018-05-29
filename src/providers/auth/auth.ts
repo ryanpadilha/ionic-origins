@@ -18,7 +18,7 @@ export class AuthProvider {
   }
 
   public login(credential: Credential): Promise<any> {
-    console.log('authProvider.login: ' + credential);
+    console.log('authProvider.login: ' + JSON.stringify(credential));
 
     return new Promise((resolve, reject) => {
       this.httpServiceProvider.post(this.URL_LOGIN, credential).then((res) => {
@@ -27,19 +27,18 @@ export class AuthProvider {
 
               this.session = new Session(res.token, res.user);
               this.createSessionStorage(this.session);
-              resolve(res.user);
+              resolve(res); // contains user to login-page
             } else {
-              resolve(res);
+              resolve(res); // contains rest-api message
             }
       }).catch(error => {
         reject(error);
       });
     });
-
   }
 
   public logout() {
-    this.createSessionStorage(null);
+    this.createSessionStorage(new Session(null, null));
   }
 
   public recoveryPassword() {
@@ -47,7 +46,7 @@ export class AuthProvider {
   }
 
   private createSessionStorage(session: Session) {
-    console.log('authProvider.createSessionStorage session: ' + session);
+    console.log('authProvider.createSessionStorage session: ' + JSON.stringify(session));
 
     this.storageProvider.persist('token', session.token);
     this.storageProvider.persist('user', session.user);

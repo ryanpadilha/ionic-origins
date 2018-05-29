@@ -45,9 +45,9 @@ export class LoginPage {
     console.log('login.onSignIn: ' + credential);
     this.authProvider.login(credential).then((res) => {
       loading.dismiss();
-      console.log('login.onSignIn res: '+ res);
+      console.log('login.onSignIn res: ' + JSON.stringify(res));
 
-      if (res.token) {
+      if (res.user) {
         this.menuCtrl.enable(true, 'appMenu');
         this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'foward' });
       } else {
@@ -55,7 +55,7 @@ export class LoginPage {
       }
     }).catch((error) => {
       loading.dismiss();
-      this.messageProvider.showAlert('Alerta', 'Falha de comunicação com o servidor. Tente mais tarde novamente.');
+      this.messageProvider.showAlert('Alerta', 'Falha de autenticação.<br> Verifique sua conexão de dados.');
     });
   }
 

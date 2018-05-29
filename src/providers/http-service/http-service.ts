@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class HttpServiceProvider {
 
-  private API_URL_BACKEND: string = "http://0.0.0.0:9000/app/api/v1";
+  private API_URL_BACKEND: string = "http://0.0.0.0:9000/mobile-api-gateway/v1/";
   
   private PROVIDER_SIGNATURE = "";
   private CLIENT_SECRET: string = "";

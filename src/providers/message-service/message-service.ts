@@ -31,7 +31,7 @@ export class MessageServiceProvider {
     return loader;
   }
 
-  public showAlert(title: string, message: string, buttons: Array<string> = ['ok']) {
+  public showAlert(title: string, message: string, buttons: Array<any> = ['ok']) {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: message,
