@@ -17,19 +17,19 @@
       <form [formGroup]="credentialsForm">
         <ion-item>
           <ion-label floating>E-mail</ion-label>
-          <ion-input type="email" [formControl]="credentialsForm.controls['username']"></ion-input>
+          <ion-input type="email" formControlName="username"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label floating>Senha</ion-label>
-          <ion-input type="password" [formControl]="credentialsForm.controls['password']"></ion-input>
+          <ion-input type="password" formControlName="password"></ion-input>
         </ion-item>  
 
         <div padding>
           <ion-row>
             <ion-col text-center>
                 <button ion-button color="primary" block 
-                  [disabled]="credentialsForm.invalid" (click)="onSignIn()" >Entrar</button>
+                  [disabled]="credentialsForm.invalid" (click)="onSignIn()">Entrar</button>
             </ion-col>
           </ion-row>
 
